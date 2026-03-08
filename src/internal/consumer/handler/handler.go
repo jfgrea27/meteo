@@ -39,6 +39,9 @@ func (h *Handler) Handle(body *string) error {
 		return fmt.Errorf("failed to convert weather data: %w", err)
 	}
 
+	// Use the city from the message envelope, not from the raw provider response
+	resp.City = msg.City
+
 	h.log.Info("converted weather data",
 		"city", resp.City,
 		"temp", resp.Temperature,

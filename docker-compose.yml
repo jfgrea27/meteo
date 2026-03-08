@@ -9,6 +9,13 @@ services:
     volumes:
       - localstack-data:/var/lib/localstack
       - ./.dev/localstack-init:/etc/localstack/init
+    healthcheck:
+      test: >
+        awslocal sqs get-queue-url --queue-name weather
+        && awslocal s3api head-bucket --bucket weather-raw
+      interval: 5s
+      timeout: 5s
+      retries: 10
 
   postgres:
     image: postgres:16
@@ -73,6 +80,23 @@ services:
       - AWS_ENDPOINT_URL=http://localstack:4566
       - S3_USE_PATH_STYLE=true
       - SQS_WAIT_TIME_SECONDS=20
+
+  api:
+    build:
+      context: src
+      dockerfile: ../Dockerfile
+      args:
+        SVC: api
+    ports:
+      - "8080:8080"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      - DB_PROVIDER=postgres
+      - DATABASE_URL=postgres://meteo:meteo@postgres:5432/meteo?sslmode=disable
+      - DB_SCHEMA=meteo
+      - API_PORT=8080
 
 volumes:
   localstack-data:

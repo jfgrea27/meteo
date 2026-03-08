@@ -72,6 +72,7 @@ func validMessage() string {
 
 	msg := weather.WeatherMessage{
 		Provider: weather.OpenWeather,
+		City:     "london",
 		Content:  json.RawMessage(rawContent),
 	}
 	body, _ := json.Marshal(msg)
@@ -99,8 +100,8 @@ func TestHandle(t *testing.T) {
 		if db.lastEntry.Temperature != 18.0 {
 			t.Errorf("Temperature = %v, want 18.0", db.lastEntry.Temperature)
 		}
-		if db.lastEntry.City != "London" {
-			t.Errorf("City = %q, want %q", db.lastEntry.City, "London")
+		if db.lastEntry.City != "london" {
+			t.Errorf("City = %q, want %q", db.lastEntry.City, "london")
 		}
 	})
 

@@ -1,0 +1,126 @@
+name: Service Build & Test
+
+on:
+  workflow_call:
+    inputs:
+      service:
+        required: true
+        type: string
+      upload-coverage:
+        required: false
+        type: boolean
+        default: false
+      compare-coverage:
+        required: false
+        type: boolean
+        default: false
+      push-ecr:
+        required: false
+        type: boolean
+        default: false
+      ecr-registry:
+        required: false
+        type: string
+        default: ""
+      image-tag:
+        required: false
+        type: string
+        default: latest
+    secrets:
+      AWS_ROLE_ARN:
+        required: false
+
+permissions:
+  contents: read
+  id-token: write
+
+jobs:
+  build-test:
+    name: Build & Test (${{ inputs.service }})
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-go@v5
+        with:
+          go-version-file: src/go.mod
+
+      - name: Build
+        run: go build -o ../bin/${{ inputs.service }} ./cmd/${{ inputs.service }}
+        working-directory: src
+
+      - name: Test with coverage
+        run: |
+          go test ./... -coverprofile=coverage.out -covermode=atomic
+          go tool cover -func=coverage.out | tail -1
+        working-directory: src
+
+      - name: Upload coverage artifact (main)
+        if: inputs.upload-coverage
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage-${{ inputs.service }}
+          path: src/coverage.out
+          retention-days: 90
+
+      - name: Download main branch coverage
+        if: inputs.compare-coverage
+        uses: dawidd6/action-download-artifact@v6
+        with:
+          branch: main
+          workflow: main-deploy.yml
+          name: coverage-${{ inputs.service }}
+          path: /tmp/main-coverage
+          if_no_artifact_found: warn
+
+      - name: Compare coverage with main
+        if: inputs.compare-coverage
+        working-directory: src
+        run: |
+          if [ ! -f /tmp/main-coverage/coverage.out ]; then
+            echo "No main branch coverage found — skipping comparison"
+            exit 0
+          fi
+
+          main_cov=$(go tool cover -func=/tmp/main-coverage/coverage.out | tail -1 | awk '{print $NF}' | tr -d '%')
+          pr_cov=$(go tool cover -func=coverage.out | tail -1 | awk '{print $NF}' | tr -d '%')
+
+          echo "Main branch coverage: ${main_cov}%"
+          echo "PR coverage:          ${pr_cov}%"
+
+          diff=$(echo "$pr_cov - $main_cov" | bc)
+          echo "Coverage diff:        ${diff}%"
+
+          if (( $(echo "$diff < -2" | bc -l) )); then
+            echo "::error::Coverage dropped by more than 2% (${diff}%)"
+            exit 1
+          fi
+
+          if (( $(echo "$diff < 0" | bc -l) )); then
+            echo "::warning::Coverage decreased by ${diff}%"
+          else
+            echo "Coverage is stable or improved"
+          fi
+
+      - name: Configure AWS credentials
+        if: inputs.push-ecr
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ secrets.AWS_ROLE_ARN }}
+          aws-region: us-east-1
+
+      - name: Login to Amazon ECR
+        if: inputs.push-ecr
+        id: ecr-login
+        uses: aws-actions/amazon-ecr-login@v2
+
+      - name: Build and push Docker image
+        if: inputs.push-ecr
+        run: |
+          docker build \
+            -f Dockerfile \
+            --build-arg SVC=${{ inputs.service }} \
+            -t ${{ inputs.ecr-registry }}/${{ inputs.service }}:${{ inputs.image-tag }} \
+            -t ${{ inputs.ecr-registry }}/${{ inputs.service }}:${{ github.sha }} \
+            src
+          docker push ${{ inputs.ecr-registry }}/${{ inputs.service }} --all-tags

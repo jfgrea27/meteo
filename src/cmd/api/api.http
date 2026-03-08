@@ -1,0 +1,13 @@
+@host = localhost:8080
+
+### Health Check
+GET http://{{host}}/health
+
+### List Cities
+GET http://{{host}}/v1/cities
+
+### Current Weather
+GET http://{{host}}/v1/weather/paris/current
+
+### Historical Weather
+GET http://{{host}}/v1/weather/paris/historical?from=2026-03-01T00:00:00Z&to=2026-03-08T00:00:00Z

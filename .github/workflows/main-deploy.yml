@@ -1,0 +1,46 @@
+name: Main Deploy
+
+on:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+  id-token: write
+
+jobs:
+  producer:
+    name: Producer
+    uses: ./.github/workflows/reusable-svc-build-test.yml
+    with:
+      service: producer
+      upload-coverage: true
+      push-ecr: true
+      ecr-registry: ${{ vars.ECR_REGISTRY }}
+      image-tag: latest
+    secrets:
+      AWS_ROLE_ARN: ${{ secrets.AWS_ROLE_ARN }}
+
+  consumer:
+    name: Consumer
+    uses: ./.github/workflows/reusable-svc-build-test.yml
+    with:
+      service: consumer
+      upload-coverage: true
+      push-ecr: true
+      ecr-registry: ${{ vars.ECR_REGISTRY }}
+      image-tag: latest
+    secrets:
+      AWS_ROLE_ARN: ${{ secrets.AWS_ROLE_ARN }}
+
+  api:
+    name: API
+    uses: ./.github/workflows/reusable-svc-build-test.yml
+    with:
+      service: api
+      upload-coverage: true
+      push-ecr: true
+      ecr-registry: ${{ vars.ECR_REGISTRY }}
+      image-tag: latest
+    secrets:
+      AWS_ROLE_ARN: ${{ secrets.AWS_ROLE_ARN }}

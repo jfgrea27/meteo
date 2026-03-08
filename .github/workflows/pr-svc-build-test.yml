@@ -1,0 +1,30 @@
+name: PR Service Build & Test
+
+on:
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  producer:
+    name: Producer
+    uses: ./.github/workflows/reusable-svc-build-test.yml
+    with:
+      service: producer
+      compare-coverage: true
+
+  consumer:
+    name: Consumer
+    uses: ./.github/workflows/reusable-svc-build-test.yml
+    with:
+      service: consumer
+      compare-coverage: true
+
+  api:
+    name: API
+    uses: ./.github/workflows/reusable-svc-build-test.yml
+    with:
+      service: api
+      compare-coverage: true
