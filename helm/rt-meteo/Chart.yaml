@@ -1,0 +1,17 @@
+apiVersion: v2
+name: rt-meteo
+description: Real-time weather data pipeline
+type: application
+version: 0.1.0
+appVersion: "1.0.0"
+
+dependencies:
+  - name: producer
+    version: 0.1.0
+    condition: producer.enabled
+  - name: consumer
+    version: 0.1.0
+    condition: consumer.enabled
+  - name: api
+    version: 0.1.0
+    condition: api.enabled

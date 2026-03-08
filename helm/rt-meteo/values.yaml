@@ -1,0 +1,21 @@
+# -- Global values shared across all subcharts.
+global:
+  image:
+    registry: ""
+    tag: "latest"
+    pullPolicy: IfNotPresent
+  aws:
+    region: us-east-1
+    account: ""
+
+# -- Producer subchart overrides.
+producer:
+  enabled: true
+
+# -- Consumer subchart overrides.
+consumer:
+  enabled: true
+
+# -- API subchart overrides.
+api:
+  enabled: true

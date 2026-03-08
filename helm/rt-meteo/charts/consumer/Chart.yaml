@@ -1,0 +1,6 @@
+apiVersion: v2
+name: consumer
+description: Weather data consumer — reads SQS, sinks to S3 and PostgreSQL
+type: application
+version: 0.1.0
+appVersion: "1.0.0"

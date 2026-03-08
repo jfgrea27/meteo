@@ -1,0 +1,55 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: {{ include "producer.fullname" . }}
+  labels:
+    {{- include "producer.labels" . | nindent 4 }}
+spec:
+  schedule: {{ .Values.schedule | quote }}
+  successfulJobsHistoryLimit: {{ .Values.successfulJobsHistoryLimit }}
+  failedJobsHistoryLimit: {{ .Values.failedJobsHistoryLimit }}
+  jobTemplate:
+    spec:
+      template:
+        metadata:
+          labels:
+            {{- include "producer.selectorLabels" . | nindent 12 }}
+          {{- with .Values.podAnnotations }}
+          annotations:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+        spec:
+          serviceAccountName: {{ include "producer.serviceAccountName" . }}
+          restartPolicy: {{ .Values.restartPolicy }}
+          containers:
+            - name: producer
+              image: {{ include "producer.image" . }}
+              imagePullPolicy: {{ .Values.image.pullPolicy | default .Values.global.image.pullPolicy }}
+              env:
+                {{- range $key, $value := .Values.env }}
+                - name: {{ $key }}
+                  value: {{ $value | quote }}
+                {{- end }}
+                - name: AWS_REGION
+                  value: {{ .Values.global.aws.region | quote }}
+                - name: AWS_ACCOUNT
+                  value: {{ .Values.global.aws.account | quote }}
+                {{- if .Values.secrets.openweatherApiKeySecret }}
+                - name: OPENWEATHER_API_KEY
+                  valueFrom:
+                    secretKeyRef:
+                      name: {{ .Values.secrets.openweatherApiKeySecret }}
+                      key: {{ .Values.secrets.openweatherApiKeyKey }}
+                {{- end }}
+              {{- with .Values.resources }}
+              resources:
+                {{- toYaml . | nindent 16 }}
+              {{- end }}
+          {{- with .Values.nodeSelector }}
+          nodeSelector:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          {{- with .Values.tolerations }}
+          tolerations:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}

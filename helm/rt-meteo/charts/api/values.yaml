@@ -1,0 +1,49 @@
+replicaCount: 2
+
+image:
+  repository: rt-meteo/api
+  tag: ""
+  pullPolicy: ""
+
+serviceAccount:
+  create: true
+  name: ""
+  annotations: {}
+
+service:
+  type: ClusterIP
+  port: 80
+  targetPort: 8080
+
+ingress:
+  enabled: false
+  className: ""
+  annotations: {}
+  hosts:
+    - host: api.rt-meteo.local
+      paths:
+        - path: /
+          pathType: Prefix
+  tls: []
+
+resources:
+  requests:
+    cpu: 100m
+    memory: 128Mi
+  limits:
+    memory: 256Mi
+
+env:
+  APP_ENV: production
+  DB_PROVIDER: postgres
+  DB_SCHEMA: meteo
+  API_PORT: "8080"
+
+secrets:
+  # -- Name of an existing Secret containing DATABASE_URL.
+  databaseUrlSecret: ""
+  databaseUrlKey: DATABASE_URL
+
+podAnnotations: {}
+nodeSelector: {}
+tolerations: []

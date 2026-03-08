@@ -1,0 +1,37 @@
+replicaCount: 1
+
+image:
+  repository: rt-meteo/consumer
+  tag: ""
+  pullPolicy: ""
+
+serviceAccount:
+  create: true
+  name: ""
+  annotations: {}
+
+resources:
+  requests:
+    cpu: 100m
+    memory: 128Mi
+  limits:
+    memory: 256Mi
+
+env:
+  APP_ENV: production
+  QUEUE_PROVIDER: sqs
+  QUEUE_NAME: weather
+  BLOB_PROVIDER: s3
+  BLOB_BUCKET: weather-raw
+  DB_PROVIDER: postgres
+  DB_SCHEMA: meteo
+  SQS_WAIT_TIME_SECONDS: "20"
+
+secrets:
+  # -- Name of an existing Secret containing DATABASE_URL.
+  databaseUrlSecret: ""
+  databaseUrlKey: DATABASE_URL
+
+podAnnotations: {}
+nodeSelector: {}
+tolerations: []
