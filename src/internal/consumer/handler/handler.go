@@ -31,7 +31,7 @@ func (h *Handler) Handle(body *string) error {
 		return fmt.Errorf("failed to unmarshal weather message: %w", err)
 	}
 
-	h.log.Info("received weather message", "provider", msg.Provider)
+	h.log.Info("received weather message", "provider", msg.Provider, "city", msg.City)
 
 	// (i) Convert raw content to response objects
 	resp, err := weather.ConvertCurrentWeather(msg.Provider, msg.Content)
@@ -46,7 +46,7 @@ func (h *Handler) Handle(body *string) error {
 	)
 
 	// (ii) Save raw data to blob store
-	key := fmt.Sprintf("%s/%s/%d.json", msg.Provider, resp.City, resp.Time.Unix())
+	key := fmt.Sprintf("%s/%s/%d.json", msg.Provider, msg.City, resp.Time.Unix())
 	if err := h.blob.Save(key, msg.Content); err != nil {
 		return fmt.Errorf("failed to save raw data to blob store: %w", err)
 	}

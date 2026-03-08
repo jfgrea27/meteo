@@ -17,6 +17,7 @@ func AggregateCurrentWeather(log *slog.Logger, svc WeatherService) []sharedweath
 		}
 		messages = append(messages, sharedweather.WeatherMessage{
 			Provider: svc.Provider(),
+			City:     city,
 			Content:  raw,
 		})
 	}

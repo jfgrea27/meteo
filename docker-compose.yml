@@ -8,7 +8,7 @@ services:
       - AWS_DEFAULT_REGION=${AWS_REGION:-us-east-1}
     volumes:
       - localstack-data:/var/lib/localstack
-      - ./src/localstack-init:/etc/localstack/init
+      - ./.dev/localstack-init:/etc/localstack/init
 
   postgres:
     image: postgres:16
