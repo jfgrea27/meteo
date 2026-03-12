@@ -21,11 +21,17 @@
           pkgs.kubectl
           pkgs.kubernetes-helm
           pkgs.just
+          pkgs.terraform
+          pkgs.tflint
+          pkgs.protobuf
+          pkgs.grpcurl
+          pkgs.pre-commit
         ];
         shellHook = ''
           export GOPATH="$PWD/src/.go"
           export GOROOT="${pkgs.go}/share/go"
           export PATH="$GOPATH/bin:$PATH"
+          pre-commit install --allow-missing-config > /dev/null 2>&1
         '';
       };
     });

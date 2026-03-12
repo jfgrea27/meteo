@@ -1,0 +1,19 @@
+syntax = "proto3";
+
+package hello;
+
+option go_package = "github.com/jfgrea27/rt-meteo/proto";
+
+// Service for handling Weather Chat
+service WeatherChat {
+  // Chat sends a message and receives a weather chat response.
+  rpc Chat (stream ChatRequest) returns (stream ChatResponse);
+}
+
+message ChatRequest {
+  string text = 1;
+}
+
+message ChatResponse {
+  string text = 1;
+}
