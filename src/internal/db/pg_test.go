@@ -8,7 +8,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/jfgrea27/rt-meteo/internal/weather"
+	"github.com/jfgrea27/meteo/internal/weather"
 )
 
 type mockPgDB struct {

@@ -6,7 +6,7 @@ import (
 	"io"
 	"testing"
 
-	pb "github.com/jfgrea27/rt-meteo/proto"
+	pb "github.com/jfgrea27/meteo/proto"
 	"google.golang.org/grpc/metadata"
 )
 

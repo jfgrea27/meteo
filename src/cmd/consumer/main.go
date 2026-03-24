@@ -4,12 +4,12 @@ import (
 	"context"
 	"os"
 
-	"github.com/jfgrea27/rt-meteo/internal/blob"
-	"github.com/jfgrea27/rt-meteo/internal/consumer/config"
-	"github.com/jfgrea27/rt-meteo/internal/consumer/handler"
-	"github.com/jfgrea27/rt-meteo/internal/db"
-	"github.com/jfgrea27/rt-meteo/internal/logger"
-	"github.com/jfgrea27/rt-meteo/internal/queue"
+	"github.com/jfgrea27/meteo/internal/blob"
+	"github.com/jfgrea27/meteo/internal/consumer/config"
+	"github.com/jfgrea27/meteo/internal/consumer/handler"
+	"github.com/jfgrea27/meteo/internal/db"
+	"github.com/jfgrea27/meteo/internal/logger"
+	"github.com/jfgrea27/meteo/internal/queue"
 )
 
 func main() {

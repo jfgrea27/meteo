@@ -3,7 +3,7 @@ package weather
 import (
 	"log/slog"
 
-	sharedweather "github.com/jfgrea27/rt-meteo/internal/weather"
+	sharedweather "github.com/jfgrea27/meteo/internal/weather"
 )
 
 func AggregateCurrentWeather(log *slog.Logger, svc WeatherService) []sharedweather.WeatherMessage {

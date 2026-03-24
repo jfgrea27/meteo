@@ -14,8 +14,8 @@ import (
 
 	"github.com/gin-gonic/gin"
 
-	api "github.com/jfgrea27/rt-meteo/internal/api"
-	"github.com/jfgrea27/rt-meteo/internal/weather"
+	api "github.com/jfgrea27/meteo/internal/api"
+	"github.com/jfgrea27/meteo/internal/weather"
 )
 
 type mockDatabase struct {

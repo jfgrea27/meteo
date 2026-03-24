@@ -4,13 +4,13 @@ import (
 	"fmt"
 	"net"
 
-	"github.com/jfgrea27/rt-meteo/internal/chat/ai"
-	"github.com/jfgrea27/rt-meteo/internal/chat/config"
-	"github.com/jfgrea27/rt-meteo/internal/chat/handler"
-	"github.com/jfgrea27/rt-meteo/internal/logger"
+	"github.com/jfgrea27/meteo/internal/chat/ai"
+	"github.com/jfgrea27/meteo/internal/chat/config"
+	"github.com/jfgrea27/meteo/internal/chat/handler"
+	"github.com/jfgrea27/meteo/internal/logger"
 	"google.golang.org/grpc"
 
-	pb "github.com/jfgrea27/rt-meteo/proto"
+	pb "github.com/jfgrea27/meteo/proto"
 )
 
 func main() {

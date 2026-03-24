@@ -6,9 +6,9 @@ import (
 	"fmt"
 	"log/slog"
 
-	"github.com/jfgrea27/rt-meteo/internal/blob"
-	"github.com/jfgrea27/rt-meteo/internal/db"
-	"github.com/jfgrea27/rt-meteo/internal/weather"
+	"github.com/jfgrea27/meteo/internal/blob"
+	"github.com/jfgrea27/meteo/internal/db"
+	"github.com/jfgrea27/meteo/internal/weather"
 )
 
 type Handler struct {

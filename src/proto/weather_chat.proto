@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package hello;
 
-option go_package = "github.com/jfgrea27/rt-meteo/proto";
+option go_package = "github.com/jfgrea27/meteo/proto";
 
 // Service for handling Weather Chat
 service WeatherChat {

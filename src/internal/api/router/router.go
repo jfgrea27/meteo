@@ -5,8 +5,8 @@ import (
 
 	"github.com/gin-gonic/gin"
 
-	"github.com/jfgrea27/rt-meteo/internal/api/handler"
-	"github.com/jfgrea27/rt-meteo/internal/db"
+	"github.com/jfgrea27/meteo/internal/api/handler"
+	"github.com/jfgrea27/meteo/internal/db"
 )
 
 func New(log *slog.Logger, database db.Database) *gin.Engine {

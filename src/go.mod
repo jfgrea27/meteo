@@ -1,4 +1,4 @@
-module github.com/jfgrea27/rt-meteo
+module github.com/jfgrea27/meteo
 
 go 1.25.7
 
@@ -10,7 +10,7 @@ require (
 	github.com/gin-gonic/gin v1.12.0
 	github.com/lib/pq v1.11.2
 	google.golang.org/grpc v1.79.2
-	google.golang.org/protobuf v1.36.10
+	google.golang.org/protobuf v1.36.11
 )
 
 require (

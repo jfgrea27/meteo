@@ -119,7 +119,7 @@ const file_proto_weather_chat_proto_rawDesc = "" +
 	"\fChatResponse\x12\x12\n" +
 	"\x04text\x18\x01 \x01(\tR\x04text2B\n" +
 	"\vWeatherChat\x123\n" +
-	"\x04Chat\x12\x12.hello.ChatRequest\x1a\x13.hello.ChatResponse(\x010\x01B$Z\"github.com/jfgrea27/rt-meteo/protob\x06proto3"
+	"\x04Chat\x12\x12.hello.ChatRequest\x1a\x13.hello.ChatResponse(\x010\x01B!Z\x1fgithub.com/jfgrea27/meteo/protob\x06proto3"
 
 var (
 	file_proto_weather_chat_proto_rawDescOnce sync.Once

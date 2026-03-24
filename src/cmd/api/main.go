@@ -3,10 +3,10 @@ package main
 import (
 	"os"
 
-	"github.com/jfgrea27/rt-meteo/internal/api/config"
-	"github.com/jfgrea27/rt-meteo/internal/api/router"
-	"github.com/jfgrea27/rt-meteo/internal/db"
-	"github.com/jfgrea27/rt-meteo/internal/logger"
+	"github.com/jfgrea27/meteo/internal/api/config"
+	"github.com/jfgrea27/meteo/internal/api/router"
+	"github.com/jfgrea27/meteo/internal/db"
+	"github.com/jfgrea27/meteo/internal/logger"
 )
 
 func main() {

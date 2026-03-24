@@ -5,10 +5,10 @@ import (
 	"os"
 	"time"
 
-	"github.com/jfgrea27/rt-meteo/internal/logger"
-	"github.com/jfgrea27/rt-meteo/internal/producer/config"
-	"github.com/jfgrea27/rt-meteo/internal/producer/weather"
-	"github.com/jfgrea27/rt-meteo/internal/queue"
+	"github.com/jfgrea27/meteo/internal/logger"
+	"github.com/jfgrea27/meteo/internal/producer/config"
+	"github.com/jfgrea27/meteo/internal/producer/weather"
+	"github.com/jfgrea27/meteo/internal/queue"
 )
 
 func main() {

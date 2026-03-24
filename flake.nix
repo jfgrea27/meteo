@@ -1,5 +1,5 @@
 {
-  description = "rt-meteo dev environment";
+  description = "meteo dev environment";
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.11";

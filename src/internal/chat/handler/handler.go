@@ -4,8 +4,8 @@ import (
 	"io"
 	"log"
 
-	"github.com/jfgrea27/rt-meteo/internal/chat/ai"
-	pb "github.com/jfgrea27/rt-meteo/proto"
+	"github.com/jfgrea27/meteo/internal/chat/ai"
+	pb "github.com/jfgrea27/meteo/proto"
 	"google.golang.org/grpc"
 )
 

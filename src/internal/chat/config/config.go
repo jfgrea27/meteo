@@ -1,7 +1,7 @@
 package config
 
 import (
-	"github.com/jfgrea27/rt-meteo/internal/utils"
+	"github.com/jfgrea27/meteo/internal/utils"
 )
 
 type Config struct {

@@ -1,6 +1,6 @@
 package weather
 
-import "github.com/jfgrea27/rt-meteo/internal/weather"
+import "github.com/jfgrea27/meteo/internal/weather"
 
 // Re-export shared types used by the producer config and callers.
 type WeatherProvider = weather.Provider

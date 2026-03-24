@@ -7,7 +7,7 @@ import (
 	"net/http"
 	"time"
 
-	sharedweather "github.com/jfgrea27/rt-meteo/internal/weather"
+	sharedweather "github.com/jfgrea27/meteo/internal/weather"
 )
 
 type WeatherService interface {
